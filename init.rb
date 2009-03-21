@@ -1,2 +1,2 @@
-ActionController::Base.send :include, InPlaceEditing
-ActionController::Base.helper InPlaceMacrosHelper
+ActionController::Base.send :include, InPlaceRichEditing
+ActionController::Base.helper InPlaceRichMacrosHelper

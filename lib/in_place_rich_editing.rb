@@ -1,4 +1,4 @@
-module InPlaceEditing
+module InPlaceRichEditing
   def self.included(base)
     base.extend(ClassMethods)
   end
@@ -7,14 +7,14 @@ module InPlaceEditing
   #
   #   # Controller
   #   class BlogController < ApplicationController
-  #     in_place_edit_for :post, :title
+  #     in_place_rich_edit_for :post, :title
   #   end
   #
   #   # View
-  #   <%= in_place_editor_field :post, 'title' %>
+  #   <%= in_place_rich_editor_field :post, 'title' %>
   #
   module ClassMethods
-    def in_place_edit_for(object, attribute, options = {})
+    def in_place_rich_edit_for(object, attribute, options = {})
       define_method("set_#{object}_#{attribute}") do
         unless [:post, :put].include?(request.method) then
           return render(:text => 'Method not allowed', :status => 405)

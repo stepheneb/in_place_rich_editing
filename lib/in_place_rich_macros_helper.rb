@@ -1,4 +1,4 @@
-module InPlaceMacrosHelper
+module InPlaceRichMacrosHelper
   # Makes an HTML element specified by the DOM ID +field_id+ become an in-place
   # editor of a property.
   #
@@ -34,8 +34,8 @@ module InPlaceMacrosHelper
   #                               in the AJAX call, +form+ is an implicit parameter
   # <tt>:script</tt>::            Instructs the in-place editor to evaluate the remote JavaScript response (default: false)
   # <tt>:click_to_edit_text</tt>::The text shown during mouseover the editable text (default: "Click to edit")
-  def in_place_editor(field_id, options = {})
-    function =  "new Ajax.InPlaceEditor("
+  def in_place_rich_editor(field_id, options = {})
+    function =  "new Ajax.InPlaceRichEditor("
     function << "'#{field_id}', "
     function << "'#{url_for(options[:url])}'"
 
@@ -68,13 +68,13 @@ module InPlaceMacrosHelper
   end
   
   # Renders the value of the specified object and method with in-place editing capabilities.
-  def in_place_editor_field(object, method, tag_options = {}, in_place_editor_options = {})
+  def in_place_rich_editor_field(object, method, tag_options = {}, in_place_rich_editor_options = {})
     instance_tag = ::ActionView::Helpers::InstanceTag.new(object, method, self)
     tag_options = {:tag => "span",
-                   :id => "#{object}_#{method}_#{instance_tag.object.id}_in_place_editor",
-                   :class => "in_place_editor_field"}.merge!(tag_options)
-    in_place_editor_options[:url] = in_place_editor_options[:url] || url_for({ :action => "set_#{object}_#{method}", :id => instance_tag.object.id })
+                   :id => "#{object}_#{method}_#{instance_tag.object.id}_in_place_rich_editor",
+                   :class => "in_place_rich_editor_field"}.merge!(tag_options)
+    in_place_rich_editor_options[:url] = in_place_rich_editor_options[:url] || url_for({ :action => "set_#{object}_#{method}", :id => instance_tag.object.id })
     tag = content_tag(tag_options.delete(:tag), h(instance_tag.value(instance_tag.object)),tag_options)
-    return tag + in_place_editor(tag_options[:id], in_place_editor_options)
+    return tag + in_place_rich_editor(tag_options[:id], in_place_rich_editor_options)
   end
 end
